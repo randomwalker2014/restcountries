@@ -75,16 +75,16 @@ pipeline {
              sh 'cp restcountries-2.0.5.war /opt/integration-test-container/jboss-uat-deployments'
              sh 'chmod 777 /opt/integration-test-container/jboss-uat-deployments/restcountries-2.0.5.war'
 
-             sh 'docker-compose -f /opt/integration-test-container/docker-compose.yml up -d --build'
+             sh 'docker-compose -f /opt/integration-test-container/docker-compose.yml up -d'
 
-            	timeout(2) {
+            	/*timeout(2) {
                		waitUntil {
                     	script {
                           def r = sh script: 'wget -q http://localhost:8280/restcountries-2.0.5/index.html -O /dev/null', returnStatus: true
                           return (r == 0);
                     	}
               		}
-           		}
+           		}*/
           }
         }
 
