@@ -27,13 +27,13 @@ pipeline {
       steps {
         script {
              SCANNER_HOME = tool 'sonarQube-scanner'
-             JOB_NAME = "${env.JOB_NAME}"
-             BRANCH_NAME = "${env.BRANCH_NAME}"
+             BRANCH_NAME = "${env.BRANCH_NAME.replaceAll("/","-")}"
+             JOB_NAME = "${env.JOB_NAME.replaceAll("/","-")}"
         }
        withSonarQubeEnv('spinsys-sonarQube') {
 
          sh "${SCANNER_HOME}/bin/sonar-scanner " +
-          '-Dsonar.projectKey=' + "$JOB_NAME" + '-' + "${BRANCH_NAME} " +
+          '-Dsonar.projectKey=' + "$JOB_NAME " +
           '-Dsonar.language=java ' +
           '-Dsonar.java.source=1.8 ' +
           '-Dsonar.sources=./src/main/java ' +
