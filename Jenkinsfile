@@ -56,10 +56,9 @@ pipeline {
             thresholds: [
                          [$class: 'FailedThreshold', unstableThreshold: '40'],
                          [$class: 'FailedThreshold', failureThreshold: '40']],
-          tools: [[$class: 'JUnitType', pattern: 'target/reports/junit/TESTS-*.xml']]]) */
-         echo 'completed Unit Testing'
-
-         step( [ $class: 'JacocoPublisher',buildOverBuild: false, changeBuildStatus: true, deltaBranchCoverage: '20', deltaInstructionCoverage: '20', exclusionPattern: '**/*Test*.class', maximumBranchCoverage: '30', maximumClassCoverage: '30', maximumComplexityCoverage: '30', maximumInstructionCoverage: '30', maximumLineCoverage: '30', maximumMethodCoverage: '30', minimumBranchCoverage: '25', minimumClassCoverage: '25', minimumComplexityCoverage: '25', minimumInstructionCoverage: '25', minimumLineCoverage: '25', minimumMethodCoverage: '25' ] )
+          tools: [[$class: 'JUnitType', pattern: 'target/reports/junit/TESTS-*.xml']]])
+          echo 'completed Unit Testing'
+          step( [ $class: 'JacocoPublisher',buildOverBuild: false, changeBuildStatus: true, deltaBranchCoverage: '20', deltaInstructionCoverage: '20', exclusionPattern: '**/*Test*.class', maximumBranchCoverage: '30', maximumClassCoverage: '30', maximumComplexityCoverage: '30', maximumInstructionCoverage: '30', maximumLineCoverage: '30', maximumMethodCoverage: '30', minimumBranchCoverage: '25', minimumClassCoverage: '25', minimumComplexityCoverage: '25', minimumInstructionCoverage: '25', minimumLineCoverage: '25', minimumMethodCoverage: '25' ] )*/
       }
     }
 
