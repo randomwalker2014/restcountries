@@ -29,11 +29,12 @@ pipeline {
              SCANNER_HOME = tool 'sonarQube-scanner'
              BRANCH_NAME = "${env.BRANCH_NAME.replaceAll("/","-")}"
              JOB_NAME = "${env.JOB_NAME.replaceAll("/","-")}"
+             BUILD_NUMBER = "${env.BUILD_NUMBER"
         }
        withSonarQubeEnv('spinsys-sonarQube') {
 
          sh "${SCANNER_HOME}/bin/sonar-scanner " +
-          '-Dsonar.projectKey=' + "$JOB_NAME " +
+          '-Dsonar.projectKey=' + "$JOB_NAME" + "-" + "$BUILD_NUMBER " +
           '-Dsonar.language=java ' +
           '-Dsonar.java.source=1.8 ' +
           '-Dsonar.sources=./src/main/java ' +
@@ -48,14 +49,14 @@ pipeline {
     stage('Unit Test and Coverage') {
       steps {
         script{
-            ANT_HOME = tool 'ant-build'
+            MAVEN_HOME = tool 'mvn'
          }
-         sh "${ANT_HOME}/bin/ant -f ./build.xml gen-test-coverage-report"
+         sh "mvn -Dmaven.test.failure.ignore=true test"
          step([$class: 'XUnitBuilder',
             thresholds: [
                         [$class: 'FailedThreshold', unstableThreshold: '40'],
                         [$class: 'FailedThreshold', failureThreshold: '40']],
-            tools: [[$class: 'JUnitType', pattern: 'build/reports/junit/TESTS-*.xml']]])
+            tools: [[$class: 'JUnitType', pattern: 'target/reports/junit/TESTS-*.xml']]])
          echo 'completed Unit Testing'
 
          step( [ $class: 'JacocoPublisher',buildOverBuild: false, changeBuildStatus: true, deltaBranchCoverage: '20', deltaInstructionCoverage: '20', exclusionPattern: '**/*Test*.class', maximumBranchCoverage: '30', maximumClassCoverage: '30', maximumComplexityCoverage: '30', maximumInstructionCoverage: '30', maximumLineCoverage: '30', maximumMethodCoverage: '30', minimumBranchCoverage: '25', minimumClassCoverage: '25', minimumComplexityCoverage: '25', minimumInstructionCoverage: '25', minimumLineCoverage: '25', minimumMethodCoverage: '25' ] )
