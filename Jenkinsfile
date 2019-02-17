@@ -62,7 +62,7 @@ pipeline {
         //      expression { currentBuild.result == 'SUCCESS' }
         //    }
         steps {
-            sh 'curl -X PUT -H "X-JFrog-Art-Api:AKCp5aUZyj5VG54DqeuTYqEf4qeAH7HcJmeTxjq63AJBBY5NZLLsZcjd3DgZCEx3BUiZ9dCGU" -T ./target/restcountries-2.0.5.war "$ARTIFACTORY_QA_URL/restcountries-2.0.5.war"'
+            sh 'curl -X PUT -H "X-JFrog-Art-Api:AKCp5aUQJ2ZKc6qHBZGqwxmQ2ZK7f135XCzutzAJhsQx7J832PrjndHyiSJRYEfYVBUeSMRnu" -T ./target/restcountries-2.0.5.war "$ARTIFACTORY_QA_URL/restcountries-2.0.5.war"'
         }
       }
  }
