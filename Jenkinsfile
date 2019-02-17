@@ -33,7 +33,7 @@ pipeline {
        withSonarQubeEnv('spinsys-sonarQube') {
 
          sh "${SCANNER_HOME}/bin/sonar-scanner " +
-          '-Dsonar.projectKey=' + "$JOB_NAME" + ""-"" + ${BRANCH_NAME} " +
+          '-Dsonar.projectKey=' + "$JOB_NAME" + '-' + "${BRANCH_NAME} " +
           '-Dsonar.language=java ' +
           '-Dsonar.java.source=1.8 ' +
           '-Dsonar.sources=./src/main/java ' +
