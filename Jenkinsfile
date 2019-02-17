@@ -132,7 +132,7 @@ pipeline {
      }
  }
 
-    post {
+  post {
      always {
 
     //generate notifications
@@ -151,7 +151,6 @@ pipeline {
         deleteDir()
      }
   }
-}
 
 
  def notifyStarted() {
