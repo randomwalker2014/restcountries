@@ -29,7 +29,7 @@ pipeline {
              SCANNER_HOME = tool 'sonarQube-scanner'
              BRANCH_NAME = "${env.BRANCH_NAME.replaceAll("/","-")}"
              JOB_NAME = "${env.JOB_NAME.replaceAll("/","-")}"
-             BUILD_NUMBER = "${env.BUILD_NUMBER"
+             BUILD_NUMBER = "${env.BUILD_NUMBER}"
         }
        withSonarQubeEnv('spinsys-sonarQube') {
 
