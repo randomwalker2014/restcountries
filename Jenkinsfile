@@ -27,7 +27,7 @@ pipeline {
       steps {
         script {
              SCANNER_HOME = tool 'sonarQube-scanner'
-             BRANCH_NAME = "${env.BRANCH_NAME.replaceAll("/","-")}"
+             BRANCH_NAME = "${env.BRANCH_NAME}"
         }
        withSonarQubeEnv('spinsys-sonarQube') {
 
@@ -36,7 +36,7 @@ pipeline {
           '-Dsonar.language=java ' +
           '-Dsonar.java.source=1.8 ' +
           '-Dsonar.sources=./src/main/java ' +
-          '-Dsonar.tests=./src/test/java/test ' +
+          '-Dsonar.tests=./src/test/java ' +
           '-Dsonar.test.inclusions=**/*test*/** ' +
           '-Dsonar.exclusions=**/*test*/** ' +
           '-Dsonar.java.binaries=./build/classes'
