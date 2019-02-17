@@ -39,7 +39,7 @@ pipeline {
           '-Dsonar.tests=./src/test/java ' +
           '-Dsonar.test.inclusions=**/*test*/** ' +
           '-Dsonar.exclusions=**/*test*/** ' +
-          '-Dsonar.java.binaries=./build/classes'
+          '-Dsonar.java.binaries=./target/classes'
        }
       }
     }
