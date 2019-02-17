@@ -57,12 +57,12 @@ pipeline {
     }
 
     stage('Push QA Image to Repo') {
-       when {
+       //when {
               //push to refactory only when Unit Tests are successful
-              expression { currentBuild.result == 'SUCCESS' }
-            }
+        //      expression { currentBuild.result == 'SUCCESS' }
+        //    }
         steps {
-            sh 'curl -X PUT -H "X-JFrog-Art-Api:AKCp5aUZyj5VG54DqeuTYqEf4qeAH7HcJmeTxjq63AJBBY5NZLLsZcjd3DgZCEx3BUiZ9dCGU" -T ./dist/lroc.war "$ARTIFACTORY_QA_URL/lroc.war"'
+            sh 'curl -X PUT -H "X-JFrog-Art-Api:AKCp5aUZyj5VG54DqeuTYqEf4qeAH7HcJmeTxjq63AJBBY5NZLLsZcjd3DgZCEx3BUiZ9dCGU" -T ./target/restcountries-2.0.5.war "$ARTIFACTORY_QA_URL/restcountries-2.0.5.war"'
         }
       }
  }
