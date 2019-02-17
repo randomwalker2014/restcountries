@@ -66,7 +66,7 @@ pipeline {
         }
       }
 
-    stage('Pull QA Image and Deploy'){
+    stage('Pull QA Image'){
 
          steps {
              notifyStarted()
@@ -123,9 +123,9 @@ pipeline {
          }
        }
 
-       stage('Promote') {
+       stage('Publish to Staging Repo') {
           steps {
-            sh 'curl -X PUT -H "X-JFrog-Art-Api:AKCp5aUQJ2ZKc6qHBZGqwxmQ2ZK7f135XCzutzAJhsQx7J832PrjndHyiSJRYEfYVBUeSMRnu" -T restcountries-2.0.5.war "$ARTIFACTORY_STAGING_URL/lroc.war"'
+            sh 'curl -X PUT -H "X-JFrog-Art-Api:AKCp5aUQJ2ZKc6qHBZGqwxmQ2ZK7f135XCzutzAJhsQx7J832PrjndHyiSJRYEfYVBUeSMRnu" -T restcountries-2.0.5.war "$ARTIFACTORY_STAGING_URL/restcountries-2.0.5.war"'
            	echo 'completed promotion to Staging'
           }
        }
