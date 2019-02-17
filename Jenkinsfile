@@ -130,7 +130,6 @@ pipeline {
           }
        }
      }
- }
 
   post {
      always {
@@ -151,7 +150,7 @@ pipeline {
         deleteDir()
      }
   }
-
+}
 
  def notifyStarted() {
   // send to email
