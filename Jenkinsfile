@@ -80,7 +80,7 @@ pipeline {
             	timeout(2) {
                		waitUntil {
                     	script {
-                          def r = sh script: 'wget -q http://localhost:8080/restcountries-2.0.5/index.html -O /dev/null', returnStatus: true
+                          def r = sh script: 'wget -q http://localhost:8280/restcountries-2.0.5/index.html -O /dev/null', returnStatus: true
                           return (r == 0);
                     	}
               		}
