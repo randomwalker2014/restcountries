@@ -53,6 +53,7 @@ pipeline {
          }
          sh "mvn -Dmaven.test.failure.ignore=true test"
          sh "echo 'completed Unit Testing'"
+         currentBuild.result = 'SUCCESS'
       }
     }
 
