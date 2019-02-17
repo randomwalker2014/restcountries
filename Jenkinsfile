@@ -65,6 +65,71 @@ pipeline {
             sh 'curl -X PUT -H "X-JFrog-Art-Api:AKCp5aUQJ2ZKc6qHBZGqwxmQ2ZK7f135XCzutzAJhsQx7J832PrjndHyiSJRYEfYVBUeSMRnu" -T ./target/restcountries-2.0.5.war "$ARTIFACTORY_QA_URL/restcountries-2.0.5.war"'
         }
       }
+
+    stage('Pull QA Image and Deploy'){
+
+         steps {
+             notifyStarted()
+
+             sh 'curl -H "X-JFrog-Art-Api:AKCp5aUQJ2ZKc6qHBZGqwxmQ2ZK7f135XCzutzAJhsQx7J832PrjndHyiSJRYEfYVBUeSMRnu" -O "$ARTIFACTORY_QA_URL/restcountries-2.0.5.war"'
+             sh 'cp restcountries-2.0.5.war /opt/integration-test-container/jboss-uat-deployments'
+             sh 'chmod 777 /opt/integration-test-container/jboss-uat-deployments/restcountries-2.0.5.war'
+
+             sh 'docker-compose -f /opt/integration-test-container/docker-compose.yml up -d --build'
+
+            	timeout(2) {
+               		waitUntil {
+                    	script {
+                          def r = sh script: 'wget -q http://localhost:8080/restcountries-2.0.5/index.html -O /dev/null', returnStatus: true
+                          return (r == 0);
+                    	}
+              		}
+           		}
+          }
+        }
+
+       stage('Run Tests') {
+         parallel {
+        	stage('Test:Integration') {
+          	  steps {
+              script{
+                  MAVEN_HOME = tool 'mvn'
+               }
+               sh "mvn -Dmaven.test.failure.ignore=true test"
+           		 echo 'completed Integration Testing'
+          	  }
+           }
+
+          stage('Test:Security') {
+          	steps {
+              script{
+                MAVEN_HOME = tool 'mvn'
+              }
+              sh "mvn -Dmaven.test.failure.ignore=true test"
+           		echo 'completed Security Testing'
+          	}
+          }
+
+          stage('Test:Performance') {
+          	    steps {
+                 script{
+                   MAVEN_HOME = tool 'mvn'
+                 }
+                 sh "mvn -Dmaven.test.failure.ignore=true test"
+                // performanceReport parsers: [[$class: 'JMeterParser', glob: '**/JMeterResults.jtl']], sourceDataFiles: 'results.xml',relativeFailedThresholdNegative: 1.2, relativeFailedThresholdPositive: 1.89, relativeUnstableThresholdNegative: 1.8, relativeUnstableThresholdPositive: 1.5
+           		  echo 'completed Performance Testing'
+          	}
+          }
+         }
+       }
+
+       stage('Promote') {
+          steps {
+            sh 'curl -X PUT -H "X-JFrog-Art-Api:AKCp5aUQJ2ZKc6qHBZGqwxmQ2ZK7f135XCzutzAJhsQx7J832PrjndHyiSJRYEfYVBUeSMRnu" -T restcountries-2.0.5.war "$ARTIFACTORY_STAGING_URL/lroc.war"'
+           	echo 'completed promotion to Staging'
+          }
+       }
+     }
  }
 
     post {
@@ -81,8 +146,9 @@ pipeline {
          }
      }
      // wipe out the workspace
-       sh "docker container prune -f"
-       deleteDir()
+        sh "docker container prune -f"
+        sh "docker-compose -f /opt/integration-test-container/docker-compose.yml down -v"
+        deleteDir()
      }
   }
 }
