@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.fayder</groupId>
-    <artifactId>rest-geo-api</artifactId>
+    <artifactId>restcountries</artifactId>
     <version>2.0.5</version>
     <packaging>war</packaging>
-    <name>restcountries</name>
+    <name>rest-geo-api</name>
     <description>REST interface to get data about countries</description>
     <developers>
         <developer>
@@ -24,7 +24,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <servlet.version>4.0.0</servlet.version>
         <junit.version>4.12</junit.version>
-        <sonar.projectKey>${project.artifactId}:${project.version}</sonar.projectKey>
+        <sonar.projectKey>${project.name}:${project.version}</sonar.projectKey>
     </properties>
 
     <dependencies>
