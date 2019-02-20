@@ -5,37 +5,6 @@ Get information about countries via a RESTful API https://restcountries.eu
 
 [![Build Status](https://travis-ci.org/fayder/restcountries.svg?branch=master)](https://travis-ci.org/fayder/restcountries)
 
-Donate!
----------------
-The restcountries project has been acquired by apilayer, one of the leading providers of API microservices. We will keep supporting restcountries and providing it as a free solution for developers. We will finance this project fully and have turned off the donations feature.
-
-Users
----------------
-RESTCountries has over 1200 users, including:
-
-[TTÜ]
-
-[Spotify International Pricing Index]
-
-[Gorillaz]
-
-[Wanderlust]
-
-[Xero]
-
-[FxPro]
-
-[SKROSS]
-
-[onefinestay]
-
-[Much Better Adventures]
-
-Stay up-to-date
----------------
-Follow RESTCountries on [Twitter]
-
-Or subscribe to the [mailing list]
 
 API Endpoints
 =======
